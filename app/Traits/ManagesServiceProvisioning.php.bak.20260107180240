@@ -75,7 +75,7 @@ trait ManagesServiceProvisioning
                     $finalConfig = $marzbanService->generateSubscriptionLink($response);
                     $success = true;
                 } else {
-                    $error = $response['detail'] ?? __('service.invalid_marzban_response');
+                    $error = $response['detail'] ?? 'پاسخ نامعتبر از مرزبان.';
                     $this->handleProvisioningError($error, $isTelegramContext, ['response' => $response]);
                     return false;
                 }
@@ -87,7 +87,7 @@ trait ManagesServiceProvisioning
                 }
                 $xuiService = new XUIService($settings->get('xui_host'), $settings->get('xui_user'), $settings->get('xui_pass'));
                 if (!$xuiService->login()) {
-                    $this->handleProvisioningError(__('service.xui_login_error'), $isTelegramContext); return false;
+                    $this->handleProvisioningError('خطا در لاگین به پنل X-UI.', $isTelegramContext); return false;
                 }
                 $inbound = Inbound::find($inboundId);
                 if (!$inbound || !$inbound->inbound_data) {
@@ -139,7 +139,7 @@ trait ManagesServiceProvisioning
                         $success = true;
                     }
                 } else {
-                    $this->handleProvisioningError($response['msg'] ?? __('service.invalid_xui_response'), $isTelegramContext, ['response' => $response]);
+                    $this->handleProvisioningError($response['msg'] ?? 'پاسخ نامعتبر از XUI', $isTelegramContext, ['response' => $response]);
                     return false;
                 }
             }
@@ -165,7 +165,7 @@ trait ManagesServiceProvisioning
         Log::error($message, $context);
         if (!$isTelegram) {
             // اگر در فیلامنت هستیم، نوتیفیکیشن نشان بده
-            Notification::make()->title(__('service.service_create_error'))->body($message)->danger()->send();
+            Notification::make()->title('خطا در ساخت سرویس')->body($message)->danger()->send();
         }
         // اگر در تلگرام باشیم، فقط لاگ می‌اندازد و false برمی‌گرداند تا در try/catch مدیریت شود
     }

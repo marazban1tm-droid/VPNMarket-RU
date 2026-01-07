@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- Powered by VPNMarket CMS | v1.0 -->
 
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
